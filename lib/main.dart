@@ -8,78 +8,72 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
 
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'SECOND ASIGNMENT',
+      home: drawer(title: 'SECOND ASIGNMENT'),
+    );
+  }
+}
+
+class drawer extends StatelessWidget{
+  const drawer({Key? key, required this.title}) : super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.deepPurpleAccent,
-          title: Text('SECOND ASIGNMENT'),
-        ),
-        drawer: OrientationBuilder(
-          builder: (ctx, orientation) {
-            print(orientation.index);
-            debugPrint(orientation.name);
-            if (orientation.name == "portrait") {
-              return Drawer(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                      Text('FIRST ELEMENT new', style: TextStyle(fontSize: 22)),
-                      Text('FIRST ELEggMENT', style: TextStyle(fontSize: 22)),
-                      Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                      Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              return  Scaffold(
-                appBar: AppBar(
-                  elevation: 0,
-                  backgroundColor: Colors.deepPurpleAccent,
-                  title: Text('SECOND ASIGNMENT'),
-                ),
+    return OrientationBuilder(
+      builder: (context, orientation) {
 
-                backgroundColor: Colors.redAccent,
-                body: Container(
-                  color: Colors.white,
-                  width: 400,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 100),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                          Text('FIRST ELEggMENT', style: TextStyle(fontSize: 22)),
-                          Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                          Text('FIRST ELEMENT', style: TextStyle(fontSize: 22)),
-                        ],
-                      ),
-                    ),
-                  ),
-              );
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(title),backgroundColor: Colors.deepPurpleAccent,),
+            body: orientation==Orientation.portrait?buildContainer(): Row(
+              children: [
+                Expanded(child: buildListView()),
+                Expanded(child: buildContainer()),
+              ],
+            ),
 
+            drawer: orientation==Orientation.portrait?Drawer(
+              child: Container(
+                padding: const EdgeInsets.only(top: 120),
+                child: buildListView(),
+              ),):null
+        );
+      },
+    );
+  }
 
+  Container buildContainer() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.red,
+    );
+  }
 
-            }
-          },
-        ),
-        backgroundColor: Colors.redAccent,
+  Container buildListView() {
+    return Container(
+      color:Colors.white,
+
+      child: ListView(
+
+        padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+        children: const [
+          Text("FIRST ELEMENT"),
+          SizedBox(height: 20,),
+          Text("SECOND ELEMENT"),
+          SizedBox(height: 20,),
+          Text("THIRD ELEMENT"),
+          SizedBox(height: 20,),
+          Text("FORTH ELEMENT"),
+          SizedBox(height: 20,),
+          Text("FIFTHE ELEMENT"),
+        ],
       ),
     );
   }
